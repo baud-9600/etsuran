@@ -1,1 +1,0 @@
-Lightweight, fast, and powerful browser designed for E-Ink devices

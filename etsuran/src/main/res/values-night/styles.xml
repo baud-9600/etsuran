@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <!--        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14</item>-->
+        <item name="dragIcon">@drawable/ic_drag</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:colorAccent">@android:color/white</item>
+        <item name="android:colorControlNormal">@android:color/white</item>
+        <item name="android:colorPrimary">@android:color/black</item>
+        <item name="backgroundColor">@android:color/black</item>
+        <item name="android:selectableItemBackground">@drawable/item_bg_selector</item>
+        <item name="android:windowAnimationStyle">@null</item>
+
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+
+    <!-- remove preference activity background color -->
+    <!--    <style name="PreferenceThemeOverlay.v14">-->
+    <!--        <item name="android:windowBackground">@null</item>-->
+    <!--    </style>-->
+
+    <style name="EtsuranPanelDialogTheme" parent="@android:style/Theme.Panel">
+        <item name="android:fontFamily">@font/lato_regular</item>
+        <item name="android:colorControlNormal">@android:color/white</item>
+        <item name="android:colorPrimary">@android:color/black</item>
+        <item name="android:colorAccent">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
+    <style name="TouchAreaDialog" parent="android:Theme.Material.Dialog.Alert">
+        <item name="android:fontFamily">@font/lato_regular</item>
+        <item name="android:backgroundDimAmount">0</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowBackground">@drawable/background_with_border</item>
+        <!-- Full dialog theme, so accent must be re-pinned (defaults to Material teal). -->
+        <item name="android:colorAccent">@android:color/white</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/MyButtonStyle</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/MyButtonStyle</item>
+    </style>
+
+    <style name="MyButtonStyle" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:backgroundTint">@android:color/black</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">88dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+
+
+
+</resources>

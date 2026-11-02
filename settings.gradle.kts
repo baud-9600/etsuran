@@ -14,8 +14,8 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "einkbro"
+rootProject.name = "etsuran"
 
 include(":adblock-client")
 include(":ad-filter")
-include(":app")
+include(":etsuran")
