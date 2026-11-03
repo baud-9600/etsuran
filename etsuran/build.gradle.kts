@@ -35,7 +35,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "de.asdfghasdfgh"
+        applicationId = "de.asdfghasdfgh.etsuran"
         minSdk = 24
         // targetSdk 36 defaults predictive back to on, which would stop KEYCODE_BACK
         // reaching BrowserActivity.onKeyDown -> KeyHandler; the manifest opts out

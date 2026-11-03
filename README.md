@@ -42,7 +42,7 @@ do not.
 - Black ink on white paper; no accent colour, no greys, no shadows
 - 64dp top bars with a single rule; 52×32dp outlined switches
 - No ripple, no page transitions, no auto-playing decoration
-- One application ID, `de.asdfghasdfgh`, for this build only — no Play Store or App Store
+- One application ID, `de.asdfghasdfgh.etsuran`, for this build only — no Play Store or App Store
   variant, no fastlane metadata, no in-app updater
 - No generative AI: no chat, no prompt actions, no model keys in Settings
 
@@ -62,7 +62,7 @@ do not.
 ./gradlew :etsuran:assembleRelease
 ```
 
-The build uses the application ID `de.asdfghasdfgh`. There is no second store or side-by-side
+The build uses the application ID `de.asdfghasdfgh.etsuran`. There is no second store or side-by-side
 variant; sign it with the local test key to install it on the phone.
 
 ## Icon
