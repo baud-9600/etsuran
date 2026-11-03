@@ -113,7 +113,7 @@ class ValueSettingItem<T>(
     override val summaryResId: Int = 0,
     var config: KMutableProperty0<T>,
     override val span: Int = 1,
-    val showValue: Boolean = false,
+    val showValue: Boolean = true,
 ) : SettingItemInterface
 
 

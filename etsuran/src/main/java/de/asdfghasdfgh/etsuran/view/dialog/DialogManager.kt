@@ -243,7 +243,7 @@ class DialogManager(
         dialogRef!!.show()
     }
 
-    private fun getFileSizeString(uri: String): String {
+    fun getFileSizeString(uri: String): String {
         val sizeInBytes = DocumentFile.fromSingleUri(activity, Uri.parse(uri))?.length() ?: 0
         val sizeInKB = sizeInBytes / 1024
         val sizeInMB = sizeInKB / 1024F
@@ -378,6 +378,8 @@ class DialogManager(
             ""
         ).show()
 
+    fun text(resId: Int): String = activity.getString(resId)
+
     suspend fun <T> getTextInput(
         titleId: Int,
         descriptionId: Int,
@@ -388,6 +390,18 @@ class DialogManager(
             activity.getString(titleId),
             if (descriptionId == 0) "" else activity.getString(descriptionId),
             defaultValue.toString()
+        ).show()
+
+    suspend fun getMultiFieldInput(
+        titleId: Int,
+        descriptionId: Int,
+        fields: List<MmdInputField>,
+    ): List<String>? =
+        MultiFieldInputDialog(
+            activity,
+            activity.getString(titleId),
+            if (descriptionId == 0) "" else activity.getString(descriptionId),
+            fields,
         ).show()
 
     suspend fun getSelectedOption(

@@ -41,7 +41,6 @@ fun buildMiscSettingItems(deps: SettingScreenDeps): List<SettingItemInterface> {
             R.string.setting_title_edit_homepage,
             0,
             config = config::favoriteUrl,
-            showValue = false
         ),
         ActionSettingItem(R.string.setting_title_pdf_paper_size, 0) {
             PrinterDocumentPaperSizeDialog(

@@ -142,6 +142,7 @@ Dies zu deaktivieren ist sicherer, schneller und spart Datenvolumen. Manche Inha
     <!-- Toast -->
     <string name="toast_copy_successful">Erfolgreich kopiert</string>
     <string name="toast_input_empty">Du hast nichts eingegeben</string>
+    <string name="toast_input_invalid_number">Bitte gib eine ganze Zahl ein</string>
     <string name="toast_load_error">Kann diese URL nicht laden</string>
     <string name="toast_share_failed">Kann diese Seite nicht teilen</string>
     <string name="toast_start_download">Starte Download</string>
@@ -422,6 +423,9 @@ Dies zu deaktivieren ist sicherer, schneller und spart Datenvolumen. Manche Inha
     <string name="setting_summary_split_search_setting">Benutzerdefinierte Suche und Ergebnisöffnung im geteilten Bildschirm</string>
     <string name="description_split_screen_string_pattern">Benutzerdefinierte Such-URL mit Schlüsselwortposition als %s</string>
     <string name="description_split_screen_title">Name eingeben, der als Kontextmenü-Titel angezeigt wird</string>
+    <string name="split_search_name_label">Name</string>
+    <string name="split_search_url_label">Such-URL</string>
+    <string name="split_search_empty_hint">Noch keine benutzerdefinierten Suchen. Mit + hinzufügen.</string>
     <string name="send_to_remote_terminate">Ferntextsuche beenden</string>
     <string name="receive_link_terminate">Linkempfang beenden</string>
     <string name="setting_title_search_in_same_tab">Tab für externe Suche</string>

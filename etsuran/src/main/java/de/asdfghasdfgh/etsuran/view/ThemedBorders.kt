@@ -584,17 +584,26 @@ fun <T : Dialog> T.withoutVendorPanelBorder(): T = apply {
 
 /**
  * Tints an AlertDialog's button-bar buttons with the theme accent, replacing
- * MyButtonStyle's static black-on-white look.
+ * MyButtonStyle's static black-on-white look. The framework paints the
+ * positive button with a filled accent background by default (black on black
+ * in this palette), so both actions get the same outlined panel as every
+ * other themed control.
  */
 fun <T : Dialog> T.withThemedButtons(): T = apply {
     if (this !is AlertDialog) return@apply
     onContentAttached {
         val accent = ThemedBorders.accentArgb(context)
+        val panel = ThemedBorders.panel(context)
         intArrayOf(
             DialogInterface.BUTTON_POSITIVE,
             DialogInterface.BUTTON_NEGATIVE,
             DialogInterface.BUTTON_NEUTRAL,
-        ).forEach { which -> getButton(which)?.setTextColor(accent) }
+        ).forEach { which ->
+            getButton(which)?.apply {
+                setTextColor(accent)
+                background = panel
+            }
+        }
     }
 }
 

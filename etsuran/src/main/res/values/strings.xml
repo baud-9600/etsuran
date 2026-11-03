@@ -250,6 +250,7 @@
 
 
     <string name="toast_input_empty">You haven\'t input anything</string>
+    <string name="toast_input_invalid_number">Please enter a whole number</string>
     <string name="toast_load_error">Can\'t load this URL</string>
     <string name="toast_share_failed">Can\'t share this page</string>
 
@@ -571,6 +572,9 @@
     <string name="setting_summary_split_search_setting">Custom search and result opening in split screen</string>
     <string name="description_split_screen_string_pattern">Custom search URL with keyword position as %s</string>
     <string name="description_split_screen_title">Input the name to be shown as context menu title</string>
+    <string name="split_search_name_label">Name</string>
+    <string name="split_search_url_label">Search URL</string>
+    <string name="split_search_empty_hint">No custom searches yet. Add one with +.</string>
     <string name="send_to_remote_terminate">Terminate remote text search</string>
     <string name="receive_link_terminate">Terminate receiving link</string>
     <string name="setting_title_search_in_same_tab">Tab for external search</string>

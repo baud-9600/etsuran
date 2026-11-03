@@ -36,7 +36,11 @@ import androidx.compose.ui.unit.dp
 import de.asdfghasdfgh.etsuran.R
 import de.asdfghasdfgh.etsuran.view.EBToast
 import de.asdfghasdfgh.etsuran.view.compose.ListScaffold
+import de.asdfghasdfgh.etsuran.view.compose.MmdDialogButtons
+import de.asdfghasdfgh.etsuran.view.compose.MmdDialogContent
 import de.asdfghasdfgh.etsuran.view.compose.MmdSwitch
+import de.asdfghasdfgh.etsuran.view.compose.MmdTextField
+import de.asdfghasdfgh.etsuran.view.compose.ThemedDialogWindowFrame
 import de.asdfghasdfgh.etsuran.view.compose.MyTheme
 import de.asdfghasdfgh.etsuran.view.dialog.DialogManager
 import io.github.edsuns.adfilter.AdFilter
@@ -100,38 +104,26 @@ private fun AddFilterDialog(
     onAdd: (String) -> Unit,
 ) {
     var text by remember { mutableStateOf("") }
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        backgroundColor = MaterialTheme.colors.background,
-        contentColor = MaterialTheme.colors.onBackground,
-        title = {
-            Text(
-                text = stringResource(R.string.adblock_add_filter),
-                style = MaterialTheme.typography.subtitle1,
-                color = MaterialTheme.colors.onBackground,
-            )
-        },
-        text = {
-            OutlinedTextField(
-                value = text,
-                onValueChange = { text = it },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                label = { Text(stringResource(R.string.adblock_add_filter)) },
-                textStyle = MaterialTheme.typography.body1,
-            )
-        },
-        confirmButton = {
-            TextButton(onClick = { onAdd(text) }) {
-                Text(stringResource(R.string.action_save))
+    Dialog(onDismissRequest = onDismiss) {
+        // ThemedBorders draws the window frame; the dialog itself stays transparent.
+        ThemedDialogWindowFrame()
+        MmdDialogContent(title = stringResource(R.string.adblock_add_filter)) {
+            Column {
+                MmdTextField(
+                    value = text,
+                    onValueChange = { text = it },
+                    label = stringResource(R.string.adblock_add_filter),
+                )
+                Spacer(Modifier.height(16.dp))
+                MmdDialogButtons(
+                    onConfirm = { onAdd(text) },
+                    onCancel = onDismiss,
+                    confirmLabel = stringResource(R.string.action_save),
+                    cancelLabel = stringResource(R.string.action_cancel),
+                )
             }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.action_cancel))
-            }
-        },
-    )
+        }
+    }
 }
 
 @Composable

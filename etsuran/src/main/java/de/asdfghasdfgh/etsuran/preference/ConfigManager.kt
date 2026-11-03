@@ -283,6 +283,13 @@ class ConfigManager(
         splitSearchItemInfoList = list
     }
 
+    fun updateSplitSearchItem(oldTitle: String, item: SplitSearchItemInfo) {
+        val list = splitSearchItemInfoList.toMutableList()
+        val index = list.indexOfFirst { it.title == oldTitle }
+        if (index >= 0) list[index] = item else list.add(item)
+        splitSearchItemInfoList = list
+    }
+
     fun deleteAllSplitSearchItems() {
         splitSearchItemInfoList = emptyList()
     }

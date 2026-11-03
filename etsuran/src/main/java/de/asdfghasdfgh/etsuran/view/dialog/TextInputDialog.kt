@@ -1,57 +1,52 @@
 package de.asdfghasdfgh.etsuran.view.dialog
 
-import android.app.AlertDialog
 import android.content.Context
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import de.asdfghasdfgh.etsuran.view.compose.MmdTextInputContent
 
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.FrameLayout
-import de.asdfghasdfgh.etsuran.R
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
-import de.asdfghasdfgh.etsuran.view.withThemedFrame
-
-
+/**
+ * A settings-sized text prompt that follows MMD instead of the framework
+ * dialog: 56dp outlined field, filled primary action, outlined cancel.
+ *
+ * The old implementation used an AlertDialog's own positive/negative buttons.
+ * On this device the framework renders the positive button as a black slab
+ * under black text, so "OK" was invisible.
+ */
 class TextInputDialog(
-   private val context: Context,
-   private val title: String,
-   private val message: String,
-   private val defaultText: String = "",
+    private val context: Context,
+    private val title: String,
+    private val message: String,
+    private val defaultText: String = "",
+    private val singleLine: Boolean = true,
+    private val hint: String = "",
 ) {
-    suspend fun show() = suspendCoroutine<String?> { continuation ->
-        val density = context.resources.displayMetrics.density
-        fun dp(value: Int) = (value * density).toInt()
-        val editText = EditText(context).apply {
-            setText(defaultText)
-            setSingleLine()
-            textSize = 20f
-            minHeight = dp(48)
-            setPadding(0, dp(8), 0, dp(8))
-            layoutParams = FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
+    suspend fun show(): String? =
+        ComposeInputDialog<String>(context) { finish ->
+            var text by remember { mutableStateOf(defaultText) }
+            val focusRequester = remember { FocusRequester() }
+            val keyboard = LocalSoftwareKeyboardController.current
+            LaunchedEffect(Unit) {
+                focusRequester.requestFocus()
+                keyboard?.show()
+            }
+            MmdTextInputContent(
+                title = title,
+                message = message,
+                value = text,
+                onValueChange = { text = it },
+                onConfirm = { finish(text) },
+                onCancel = { finish(null) },
+                placeholder = hint.ifBlank { null },
+                singleLine = singleLine,
+                fieldModifier = Modifier.focusRequester(focusRequester),
             )
-        }
-        // A full-width field with MMD's 16dp inset. The framework AlertDialog
-        // otherwise measures EditText at its hint width and left-aligns it.
-        val field = FrameLayout(context).apply {
-            setPadding(dp(20), dp(4), dp(20), dp(4))
-            addView(editText)
-        }
-
-        AlertDialog.Builder(context, R.style.TouchAreaDialog)
-                .setTitle(title)
-                .setMessage(message)
-                .setView(field)
-                .setCancelable(true)
-                .setPositiveButton(android.R.string.ok) { dialog, _ ->
-                    dialog.dismiss()
-                    val text = editText.text.toString()
-                    continuation.resume(text)
-                }
-                .setNegativeButton(android.R.string.cancel) { dialog, _ ->
-                    dialog.dismiss()
-                    continuation.resume(null)
-                }.show().withThemedFrame()
-    }
+        }.show()
 }

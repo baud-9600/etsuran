@@ -55,6 +55,8 @@ import de.asdfghasdfgh.etsuran.userscript.UpdateResult
 import de.asdfghasdfgh.etsuran.userscript.UserScriptManager
 import de.asdfghasdfgh.etsuran.view.EBToast
 import de.asdfghasdfgh.etsuran.view.compose.ListScaffold
+import de.asdfghasdfgh.etsuran.view.compose.MmdDialogButtons
+import de.asdfghasdfgh.etsuran.view.compose.MmdTextField
 import de.asdfghasdfgh.etsuran.view.compose.MmdSwitch
 import de.asdfghasdfgh.etsuran.view.compose.MyTheme
 import de.asdfghasdfgh.etsuran.view.compose.ThemedDialogWindowFrame
@@ -375,20 +377,19 @@ private fun ScriptEditorDialog(
         ) {
             Text(
                 stringResource(R.string.setting_title_userscripts),
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.onSurface,
+                style = MaterialTheme.typography.h3,
+                color = MaterialTheme.colors.onBackground,
                 modifier = Modifier.padding(bottom = 12.dp),
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                TextField(
+                MmdTextField(
                     value = url,
                     onValueChange = { url = it },
                     modifier = Modifier.weight(1f),
-                    singleLine = true,
-                    label = { Text(stringResource(R.string.userscript_install_from_url)) },
+                    label = stringResource(R.string.userscript_install_from_url),
                 )
                 Spacer(Modifier.width(8.dp))
                 OutlinedButton(
@@ -400,25 +401,21 @@ private fun ScriptEditorDialog(
                 }
             }
             Spacer(Modifier.height(8.dp))
-            TextField(
+            MmdTextField(
                 value = if (tooLargeToEdit) code.take(EDITOR_DISPLAY_LIMIT) + "\n..." else code,
                 onValueChange = { if (!tooLargeToEdit) code = it },
-                readOnly = tooLargeToEdit,
+                singleLine = false,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 200.dp, max = 360.dp),
-                label = { Text(stringResource(R.string.userscript_code)) },
+                    .heightIn(min = 180.dp, max = 320.dp),
+                label = stringResource(R.string.userscript_code),
             )
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
-                horizontalArrangement = Arrangement.End,
-            ) {
-                TextButton(onClick = onDismiss) { Text(stringResource(android.R.string.cancel)) }
-                Spacer(Modifier.width(8.dp))
-                TextButton(onClick = { if (code.isNotBlank()) onSaveCode(code) }) {
-                    Text(stringResource(android.R.string.ok))
-                }
-            }
+            Spacer(Modifier.height(12.dp))
+            MmdDialogButtons(
+                onConfirm = { if (code.isNotBlank()) onSaveCode(code) },
+                onCancel = onDismiss,
+                confirmEnabled = code.isNotBlank(),
+            )
         }
     }
 }

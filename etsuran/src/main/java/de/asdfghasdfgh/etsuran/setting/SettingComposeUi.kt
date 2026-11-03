@@ -74,6 +74,7 @@ import de.asdfghasdfgh.etsuran.preference.ToolbarPosition
 import de.asdfghasdfgh.etsuran.preference.toggle
 import de.asdfghasdfgh.etsuran.unit.EinkImageProcessor
 import de.asdfghasdfgh.etsuran.unit.ViewUnit
+import de.asdfghasdfgh.etsuran.view.EBToast
 import de.asdfghasdfgh.etsuran.view.dialog.DialogManager
 import de.asdfghasdfgh.etsuran.view.dialog.compose.HorizontalSeparator
 import kotlinx.coroutines.Dispatchers
@@ -241,10 +242,12 @@ fun <T> ValueSettingItemUi(
     modifier: Modifier = Modifier,
 ) {
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
     val currentValue = remember(setting) { mutableStateOf(setting.config.get()) }
+    val shownValue = currentValue.value?.toString().orEmpty()
     SettingItemUi(
         setting = setting,
-        extraTitlePostfix = if (showValue) ": ${currentValue.value}" else "",
+        extraTitlePostfix = if (showValue && shownValue.isNotBlank()) ": $shownValue" else "",
         showBorder = showBorder,
         modifier = modifier,
     ) {
@@ -253,10 +256,14 @@ fun <T> ValueSettingItemUi(
                 setting.titleResId,
                 setting.summaryResId,
                 setting.config.get()
-            ) ?: return@launch
+            )?.trim() ?: return@launch
             @Suppress("UNCHECKED_CAST")
             if (setting.config.get() is Int) {
-                val intValue = value.toIntOrNull() ?: return@launch
+                val intValue = value.toIntOrNull()
+                if (intValue == null) {
+                    EBToast.show(context, R.string.toast_input_invalid_number)
+                    return@launch
+                }
                 setting.config.set(intValue as T)
                 currentValue.value = intValue as T
             } else {
