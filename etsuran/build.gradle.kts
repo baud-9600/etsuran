@@ -1,6 +1,7 @@
 import com.android.build.api.variant.BuildConfigField
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Properties
 import java.util.TimeZone
 
 plugins {
@@ -31,8 +32,32 @@ abstract class BuildTimeValueSource :
     }
 }
 
+// The local release key lives outside version control. `keystore.properties`
+// is git-ignored (see .gitignore); copy the one from ~/etsuran-signing to
+// reuse this key for another app. Without it the release build stays
+// unsigned so CI/F-Droid can still assemble.
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) {
+        keystorePropertiesFile.inputStream().use { load(it) }
+    }
+}
+
 android {
     compileSdk = 36
+
+    signingConfigs {
+        if (keystorePropertiesFile.exists()) {
+            create("release") {
+                storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+                enableV1Signing = true
+                enableV2Signing = true
+            }
+        }
+    }
 
     defaultConfig {
         applicationId = "de.asdfghasdfgh.etsuran"
@@ -61,6 +86,7 @@ android {
 
     buildTypes {
         getByName("release") {
+            signingConfigs.findByName("release")?.let { signingConfig = it }
             isMinifyEnabled = true
             isShrinkResources = true
             // Must stay on `proguard-android-optimize.txt`: dropping it to the plain
@@ -72,6 +98,7 @@ android {
             )
         }
         create("releaseDebuggable") {
+            signingConfigs.findByName("release")?.let { signingConfig = it }
             isDebuggable = true
             isMinifyEnabled = false
             isShrinkResources = false
