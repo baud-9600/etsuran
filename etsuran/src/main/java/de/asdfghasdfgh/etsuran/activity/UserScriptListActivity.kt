@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -291,16 +292,22 @@ private fun ScriptRow(
     onEdit: () -> Unit,
     onDelete: () -> Unit,
 ) {
+    // Same geometry as the ad-block filter rows: title left, actions and the
+    // switch right, the row itself opens the editor.
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 72.dp)
+            .clickable(onClick = onEdit)
+            .padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        MmdSwitch(checked = script.enabled, onCheckedChange = onToggle)
-        Spacer(Modifier.width(12.dp))
         Text(
             script.name.ifBlank { "(unnamed)" },
             modifier = Modifier.weight(1f),
-            color = MaterialTheme.colors.onSurface,
+            style = MaterialTheme.typography.subtitle1,
+            color = MaterialTheme.colors.onBackground,
+            maxLines = 2,
         )
         IconButton(onClick = onUpdate, enabled = !updating) {
             if (updating) {
@@ -309,15 +316,21 @@ private fun ScriptRow(
                     strokeWidth = 2.dp,
                 )
             } else {
-                Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.userscript_update))
+                Icon(
+                    Icons.Filled.Refresh,
+                    contentDescription = stringResource(R.string.userscript_update),
+                    tint = MaterialTheme.colors.onBackground,
+                )
             }
         }
-        IconButton(onClick = onEdit) {
-            Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.menu_edit))
-        }
         IconButton(onClick = onDelete) {
-            Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.menu_delete))
+            Icon(
+                Icons.Filled.Delete,
+                contentDescription = stringResource(R.string.menu_delete),
+                tint = MaterialTheme.colors.onBackground,
+            )
         }
+        MmdSwitch(checked = script.enabled, onCheckedChange = onToggle)
     }
 }
 
