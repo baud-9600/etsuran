@@ -158,7 +158,7 @@ fun WhiteListContent(
         )
     } else {
         LazyColumn(modifier = modifier) {
-            items(list.value.size, key = { list.value[it].value }) { index ->
+            items(list.value.size) { index ->
                 val entry = list.value[index]
                 WhiteListRow(
                     entry = entry,

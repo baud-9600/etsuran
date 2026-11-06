@@ -91,7 +91,9 @@ fun buildUiSettingItems(deps: SettingScreenDeps): List<SettingItemInterface> {
             R.string.setting_title_page_left_value,
             0,
             R.string.setting_summary_page_left_value,
-            config.touch::pageReservedOffsetInString
+            config.touch::pageReservedOffsetInString,
+            validator = { it.matches(Regex("\\d+%?")) },
+            invalidMessageResId = R.string.toast_input_invalid_offset,
         ),
         ActionSettingItem(
             R.string.reader_settings,

@@ -257,6 +257,10 @@ fun <T> ValueSettingItemUi(
                 setting.summaryResId,
                 setting.config.get()
             )?.trim() ?: return@launch
+            if (setting.validator?.invoke(value) == false) {
+                EBToast.show(context, setting.invalidMessageResId)
+                return@launch
+            }
             @Suppress("UNCHECKED_CAST")
             if (setting.config.get() is Int) {
                 val intValue = value.toIntOrNull()

@@ -142,6 +142,8 @@ Dies zu deaktivieren ist sicherer, schneller und spart Datenvolumen. Manche Inha
     <!-- Toast -->
     <string name="toast_copy_successful">Erfolgreich kopiert</string>
     <string name="toast_input_empty">Du hast nichts eingegeben</string>
+    <string name="toast_input_invalid">Bitte prüfe deine Eingabe</string>
+    <string name="toast_input_invalid_offset">Gib eine Pixelzahl oder einen Prozentsatz ein (zum Beispiel 80 oder 25 %)</string>
     <string name="toast_input_invalid_number">Bitte gib eine ganze Zahl ein</string>
     <string name="toast_load_error">Kann diese URL nicht laden</string>
     <string name="toast_share_failed">Kann diese Seite nicht teilen</string>

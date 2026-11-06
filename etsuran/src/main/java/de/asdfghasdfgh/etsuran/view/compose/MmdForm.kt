@@ -18,9 +18,16 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
@@ -41,32 +48,64 @@ fun MmdTextField(
     placeholder: String? = null,
     singleLine: Boolean = true,
     keyboardType: KeyboardType = KeyboardType.Text,
+    selectAllOnFocus: Boolean = false,
 ) {
     val ink = MaterialTheme.colors.onBackground
     val paper = MaterialTheme.colors.background
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 56.dp),
-        textStyle = MaterialTheme.typography.body1,
-        label = label?.let { { Text(it) } },
-        placeholder = placeholder?.let { { Text(it) } },
-        singleLine = singleLine,
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-        shape = themedItemShape(),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = ink,
-            backgroundColor = paper,
-            cursorColor = ink,
-            focusedBorderColor = ink,
-            unfocusedBorderColor = ink,
-            focusedLabelColor = ink,
-            unfocusedLabelColor = ink,
-            placeholderColor = ink.copy(alpha = 0.6f),
-        ),
+    val colors = TextFieldDefaults.outlinedTextFieldColors(
+        textColor = ink,
+        backgroundColor = paper,
+        cursorColor = ink,
+        focusedBorderColor = ink,
+        unfocusedBorderColor = ink,
+        focusedLabelColor = ink,
+        unfocusedLabelColor = ink,
+        placeholderColor = ink.copy(alpha = 0.6f),
     )
+    val fieldModifier = modifier
+        .fillMaxWidth()
+        .heightIn(min = 56.dp)
+
+    if (selectAllOnFocus) {
+        // Start with the old value selected so typing replaces it; editing a
+        // long URL otherwise silently appends to the existing one.
+        var fieldValue by remember {
+            mutableStateOf(TextFieldValue(value, TextRange(0, value.length)))
+        }
+        LaunchedEffect(value) {
+            if (value != fieldValue.text) {
+                fieldValue = TextFieldValue(value, TextRange(0, value.length))
+            }
+        }
+        OutlinedTextField(
+            value = fieldValue,
+            onValueChange = {
+                fieldValue = it
+                onValueChange(it.text)
+            },
+            modifier = fieldModifier,
+            textStyle = MaterialTheme.typography.body1,
+            label = label?.let { { Text(it) } },
+            placeholder = placeholder?.let { { Text(it) } },
+            singleLine = singleLine,
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            shape = themedItemShape(),
+            colors = colors,
+        )
+    } else {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = fieldModifier,
+            textStyle = MaterialTheme.typography.body1,
+            label = label?.let { { Text(it) } },
+            placeholder = placeholder?.let { { Text(it) } },
+            singleLine = singleLine,
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            shape = themedItemShape(),
+            colors = colors,
+        )
+    }
 }
 
 /** MMD's dialog actions: a filled primary button and an outlined cancel button. */
@@ -160,6 +199,7 @@ fun MmdTextInputContent(
     keyboardType: KeyboardType = KeyboardType.Text,
     confirmEnabled: Boolean = true,
     fieldModifier: Modifier = Modifier,
+    selectAllOnFocus: Boolean = false,
 ) {
     MmdDialogContent(title = title, message = message) {
         Column {
@@ -171,6 +211,7 @@ fun MmdTextInputContent(
                 placeholder = placeholder,
                 singleLine = singleLine,
                 keyboardType = keyboardType,
+                selectAllOnFocus = selectAllOnFocus,
             )
             Spacer(Modifier.height(16.dp))
             MmdDialogButtons(

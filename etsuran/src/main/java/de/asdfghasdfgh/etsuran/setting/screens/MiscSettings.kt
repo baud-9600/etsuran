@@ -60,13 +60,6 @@ fun buildMiscSettingItems(deps: SettingScreenDeps): List<SettingItemInterface> {
             R.string.setting_summary_translated_langs,
             config.translation::preferredTranslateLanguageString
         ),
-        ValueSettingItem(
-            R.string.translate_image_key,
-            0,
-            R.string.translate_image_key_summary,
-            config = config.ai::imageApiKey,
-            showValue = false
-        ),
         ActionSettingItem(
             R.string.setting_dual_caption,
             0,

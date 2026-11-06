@@ -47,6 +47,7 @@ class TextInputDialog(
                 placeholder = hint.ifBlank { null },
                 singleLine = singleLine,
                 fieldModifier = Modifier.focusRequester(focusRequester),
+                selectAllOnFocus = true,
             )
         }.show()
 }

@@ -114,6 +114,9 @@ class ValueSettingItem<T>(
     var config: KMutableProperty0<T>,
     override val span: Int = 1,
     val showValue: Boolean = true,
+    /** Rejects values that the consumer cannot parse (e.g. page offsets). */
+    val validator: ((String) -> Boolean)? = null,
+    val invalidMessageResId: Int = R.string.toast_input_invalid,
 ) : SettingItemInterface
 
 

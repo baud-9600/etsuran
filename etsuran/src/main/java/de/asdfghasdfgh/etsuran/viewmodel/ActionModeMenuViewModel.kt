@@ -112,8 +112,6 @@ class ActionModeMenuViewModel(
                 action = { _actionModeMenuState.value = ActionModeMenuState.ReadFromHere }
             )
         )
-        if (configManager.ai.imageApiKey.isNotEmpty()) {
-        }
         menuInfos.add(
             0,
             MenuInfo(
@@ -122,16 +120,14 @@ class ActionModeMenuViewModel(
                 action = { _actionModeMenuState.value = ActionModeMenuState.GoogleTranslate }
             )
         )
-        if (configManager.ai.imageApiKey.isNotBlank()) {
-            menuInfos.add(
-                0,
-                MenuInfo(
-                    context.getString(R.string.deepl_translate),
-                    drawable = ContextCompat.getDrawable(context, R.drawable.ic_translate),
-                    action = { _actionModeMenuState.value = ActionModeMenuState.DeeplTranslate }
-                )
+        menuInfos.add(
+            0,
+            MenuInfo(
+                context.getString(R.string.deepl_translate),
+                drawable = ContextCompat.getDrawable(context, R.drawable.ic_translate),
+                action = { _actionModeMenuState.value = ActionModeMenuState.DeeplTranslate }
             )
-        }
+        )
         menuInfos.add(
             0,
             MenuInfo(

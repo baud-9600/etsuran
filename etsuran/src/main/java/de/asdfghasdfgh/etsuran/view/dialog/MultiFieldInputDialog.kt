@@ -41,6 +41,7 @@ class MultiFieldInputDialog(
                             onValueChange = { values[index] = it },
                             label = field.label,
                             keyboardType = field.keyboardType,
+                            selectAllOnFocus = true,
                         )
                         if (index != fields.lastIndex) Spacer(Modifier.height(12.dp))
                     }

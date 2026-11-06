@@ -65,7 +65,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import de.asdfghasdfgh.etsuran.R
-import de.asdfghasdfgh.etsuran.preference.GptActionScope
 import de.asdfghasdfgh.etsuran.unit.MarkdownBlocks
 import de.asdfghasdfgh.etsuran.unit.ShareUtil
 import de.asdfghasdfgh.etsuran.unit.ViewUnit
@@ -224,9 +223,6 @@ private fun TranslateResponse(
             if (isWholePageMode) {
                 SaveButton(iconSize, iconPadding, viewModel)
             } else {
-                if (ViewUnit.isTablet(LocalContext.current)) {
-                    GptRow(viewModel)
-                }
                 GoogleButton(iconSize, iconPadding, translateGoogle, onTargetLanguageClick)
                 if (showExtraIcons) {
                     DeepLButton(iconSize, iconPadding, translateDeepL, onTargetLanguageClick)
@@ -234,12 +230,6 @@ private fun TranslateResponse(
                 InfoButton(showRequest, iconSize)
             }
             CloseButton(iconSize, iconPadding, closeClick)
-        }
-        if (!isWholePageMode && !ViewUnit.isTablet(LocalContext.current)) {
-            GptRow(
-                viewModel,
-                modifier = Modifier.align(Alignment.End),
-            )
         }
         Column(
             modifier = Modifier
@@ -406,57 +396,6 @@ private fun CopyButton(
             .padding(iconPadding)
             .clickable { ShareUtil.copyToClipboard(context, responseMessage.text) }
     )
-}
-
-@Composable
-private fun GptRow(
-    translationViewModel: TranslationViewModel,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.End,
-    ) {
-        val coroutineScope = rememberCoroutineScope()
-
-        val saveIcon = Icons.Default.Save
-        var currentIcon by remember { mutableStateOf(saveIcon) }
-
-
-        ActionMenuItem(
-            "",
-            iconDrawable = null,
-            imageVector = currentIcon,
-            onClicked = {
-                coroutineScope.launch {
-                    translationViewModel.saveTranslationResult()
-                    currentIcon = Icons.Filled.Done
-                    delay(1000) // Wait for 0.5 seconds
-                    currentIcon = saveIcon
-                }
-            }
-        )
-        translationViewModel.getGptActionList()
-            .mapIndexed { index, gptActionInfo -> index to gptActionInfo }
-            .filter { it.second.scope == GptActionScope.TextSelection }
-            .forEach { (index, gptActionInfo) ->
-                val gptClicked = remember {
-                    {
-                        translationViewModel.gptActionInfo = gptActionInfo
-                        translationViewModel.translate(TRANSLATE_API.LLM)
-                    }
-                }
-                val gptLongClicked =
-                    remember { { translationViewModel.showEditGptActionDialog(index) } }
-                ActionMenuItem(
-                    gptActionInfo.name,
-                    null,
-                    onClicked = gptClicked,
-                    onLongClicked = gptLongClicked
-                )
-            }
-    }
 }
 
 @Composable

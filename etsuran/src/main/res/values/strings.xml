@@ -250,6 +250,8 @@
 
 
     <string name="toast_input_empty">You haven\'t input anything</string>
+    <string name="toast_input_invalid">Please check the value you entered</string>
+    <string name="toast_input_invalid_offset">Enter a number of pixels or a percentage (for example 80 or 25%)</string>
     <string name="toast_input_invalid_number">Please enter a whole number</string>
     <string name="toast_load_error">Can\'t load this URL</string>
     <string name="toast_share_failed">Can\'t share this page</string>
