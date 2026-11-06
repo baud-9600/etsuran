@@ -65,6 +65,20 @@ do not.
 The build uses the application ID `de.asdfghasdfgh.etsuran`. There is no second store or side-by-side
 variant; sign it with the local test key to install it on the phone.
 
+## Signing
+
+Release APKs use the shared `asdfghasdfgh` signing key when a local
+`keystore.properties` exists (see `keystore.properties.sample`). The keystore and
+its credentials stay outside version control:
+
+- `etsuran-release.keystore` in the repository root (ignored by `*.keystore`)
+- `keystore.properties` in the repository root (ignored)
+- copies for other apps: `~/etsuran-release.keystore` and
+  `~/etsuran-signing/keystore.properties`
+
+Without `keystore.properties` the release build is left unsigned so CI and
+F-Droid can still assemble it.
+
 ## Icon
 
 The launcher icon is `icons/launcher-etsuran.svg`: a tabbed window with a globe, drawn on the
