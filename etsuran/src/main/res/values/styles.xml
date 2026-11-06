@@ -12,6 +12,16 @@
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
         <item name="android:forceDarkAllowed">true</item>
+        <!-- Android 12's launch splash must not flash the launcher icon. The
+             dedicated SplashTheme.* styles already use splash_nothing, but the
+             first cold-start frame is drawn from this activity theme before
+             SplashThemer runs. -->
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_nothing</item>
+        <item name="android:windowSplashScreenBackground">@android:color/white</item>
+        <!-- Don't draw a preview window at all; the Compose/WebView content
+             below is ready quickly enough and e-ink refresh makes the blank
+             frame look like a flash. -->
+        <item name="android:windowDisablePreview">true</item>
         <!--        <item name="preferenceTheme">@style/preferenceTheme</item>-->
         <item name="dragIcon">@drawable/ic_drag</item>
         <item name="android:textColor">@android:color/black</item>
