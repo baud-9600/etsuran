@@ -73,8 +73,9 @@ its credentials stay outside version control:
 
 - `etsuran-release.keystore` in the repository root (ignored by `*.keystore`)
 - `keystore.properties` in the repository root (ignored)
-- copies for other apps: `~/etsuran-release.keystore` and
-  `~/etsuran-signing/keystore.properties`
+- copies for other apps: `~/etsuran-release.keystore`,
+  `~/etsuran-signing/etsuran-release.keystore` and
+  `~/etsuran-signing/keystore.properties` (with a short README)
 
 Without `keystore.properties` the release build is left unsigned so CI and
 F-Droid can still assemble it.
