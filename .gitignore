@@ -30,3 +30,6 @@ tools/reports/
 adblock-client/.cxx
 
 .claude/
+
+# Local signing key written by the release workflow and local builds
+signing/

@@ -65,20 +65,9 @@ do not.
 The build uses the application ID `de.asdfghasdfgh.etsuran`. There is no second store or side-by-side
 variant; sign it with the local test key to install it on the phone.
 
-## Signing
-
-Release APKs use the shared `asdfghasdfgh` signing key when a local
-`keystore.properties` exists (see `keystore.properties.sample`). The keystore and
-its credentials stay outside version control:
-
-- `etsuran-release.keystore` in the repository root (ignored by `*.keystore`)
-- `keystore.properties` in the repository root (ignored)
-- copies for other apps: `~/etsuran-release.keystore`,
-  `~/etsuran-signing/etsuran-release.keystore` and
-  `~/etsuran-signing/keystore.properties` (with a short README)
-
-Without `keystore.properties` the release build is left unsigned so CI and
-F-Droid can still assemble it.
+Download <https://github.com/baud-9600/etsuran/releases/latest/download/etsuran.apk> and sideload it.
+That address always points at the newest release, and every release publishes a `.sha256`
+beside the APK if you would rather check than trust.
 
 ## Icon
 
