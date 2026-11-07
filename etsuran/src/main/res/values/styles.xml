@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="TransparentActivity" parent="AppTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -16,8 +16,8 @@
              dedicated SplashTheme.* styles already use splash_nothing, but the
              first cold-start frame is drawn from this activity theme before
              SplashThemer runs. -->
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_nothing</item>
-        <item name="android:windowSplashScreenBackground">@android:color/white</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:ignore="NewApi">@drawable/splash_nothing</item>
+        <item name="android:windowSplashScreenBackground" tools:ignore="NewApi">@android:color/white</item>
         <!-- Don't draw a preview window at all; the Compose/WebView content
              below is ready quickly enough and e-ink refresh makes the blank
              frame look like a flash. -->
