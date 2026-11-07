@@ -66,8 +66,12 @@ android {
         // reaching BrowserActivity.onKeyDown -> KeyHandler; the manifest opts out
         // via enableOnBackInvokedCallback=false.
         targetSdk = 36
-        versionCode = 16_07_01
-        versionName = "16.7.1"
+        // The fork's own first release. The app ID is de.asdfghasdfgh.etsuran, so the
+        // version numbers inherited from einkbro (16.7.1) say nothing about this app.
+        // versionCode packs the release tag: major * 10_000_000 + minor * 10_000 + patch.
+        // v0.1.0 -> 10000.
+        versionCode = 10_000
+        versionName = "0.1.0"
 
         // Google Drive backup sync: an "installed app" OAuth client (not a secret;
         // PKCE, no client secret) with the reversed-client-id custom-scheme redirect.
