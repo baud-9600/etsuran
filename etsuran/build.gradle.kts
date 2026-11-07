@@ -33,7 +33,7 @@ abstract class BuildTimeValueSource :
 }
 
 // The local release key lives outside version control. `keystore.properties`
-// is git-ignored (see .gitignore); copy the one from ~/etsuran-signing to
+// is git-ignored (see .gitignore); copy the one from ~/asdfghasdfgh-signing to
 // reuse this key for another app. Without it the release build stays
 // unsigned so CI/F-Droid can still assemble.
 val keystorePropertiesFile = rootProject.file("keystore.properties")
