@@ -13,7 +13,7 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 
-RES_DIR = os.path.join(os.path.dirname(__file__), "..", "app", "src", "main", "res")
+RES_DIR = os.path.join(os.path.dirname(__file__), "..", "etsuran", "src", "main", "res")
 
 
 def keys(path):
